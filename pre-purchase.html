@@ -623,76 +623,6 @@ body {
   font-style: italic;
 }
 
-/* ========== RED FLAGS ========== */
-.red-flags {
-  padding: 120px 0;
-  background: var(--teal);
-  position: relative;
-  overflow: hidden;
-}
-.red-flags::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  opacity: 0.03;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  background-size: 256px;
-  pointer-events: none;
-}
-.red-flags-header {
-  text-align: center;
-  margin-bottom: 64px;
-  position: relative;
-}
-.red-flags-header .section-title { color: var(--white); }
-.red-flags-header .section-subtitle { margin: 0 auto; color: var(--text-light); }
-.flags-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  max-width: 900px;
-  margin: 0 auto;
-  position: relative;
-}
-.flag-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  padding: 24px;
-  border-radius: 12px;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.06);
-  transition: all 0.3s;
-}
-.flag-item:hover {
-  background: rgba(255,255,255,0.06);
-  border-color: rgba(103, 183, 190, 0.2);
-}
-.flag-number {
-  width: 28px;
-  height: 28px;
-  border-radius: 8px;
-  background: rgba(217, 119, 6, 0.15);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--warning);
-}
-.flag-item h4 {
-  font-size: 0.92rem;
-  color: var(--white);
-  font-weight: 500;
-  margin-bottom: 4px;
-}
-.flag-item p {
-  font-size: 0.82rem;
-  color: var(--text-light);
-  line-height: 1.5;
-}
-
 /* ========== PROCESS ========== */
 .process {
   padding: 120px 0;
@@ -1113,7 +1043,6 @@ body {
   .vs-layout { grid-template-columns: 1fr; gap: 24px; }
   .vs-divider { display: none; }
   .scope-grid { grid-template-columns: 1fr; }
-  .flags-grid { grid-template-columns: 1fr; }
   .case-grid { grid-template-columns: 1fr; }
   .hero h1 { font-size: 2.2rem; }
   .section-title { font-size: 1.8rem; }
@@ -1346,89 +1275,6 @@ body {
       </div>
     </div>
     <p class="scope-note reveal">Then once you've moved into a home with no major hazards, our comprehensive assessments can help you optimize everything else.</p>
-  </div>
-</section>
-
-<!-- RED FLAGS -->
-<section class="red-flags">
-  <div class="container">
-    <div class="red-flags-header">
-      <div class="section-label reveal" style="color:var(--warning);">Before You Commit</div>
-      <h2 class="section-title reveal">10 red flags that signal a sick home</h2>
-      <p class="section-subtitle reveal">These are issues standard home inspections won't catch. Inspectors aren't looking at the home through a health lens. Our New Home Screening will.</p>
-    </div>
-    <div class="flags-grid">
-      <div class="flag-item reveal reveal-delay-1">
-        <div class="flag-number">1</div>
-        <div>
-          <h4>Overcomplicated rooflines</h4>
-          <p>Complex roof shapes trap moisture and create leak-prone junctures that breed hidden mold.</p>
-        </div>
-      </div>
-      <div class="flag-item reveal reveal-delay-2">
-        <div class="flag-number">2</div>
-        <div>
-          <h4>Attached garage</h4>
-          <p>Car exhaust, stored chemicals, and combustion gases migrate into living spaces through shared walls.</p>
-        </div>
-      </div>
-      <div class="flag-item reveal reveal-delay-1">
-        <div class="flag-number">3</div>
-        <div>
-          <h4>Older wiring (knob and tube)</h4>
-          <p>Produces elevated electromagnetic fields and can create body voltage in sleeping areas.</p>
-        </div>
-      </div>
-      <div class="flag-item reveal reveal-delay-2">
-        <div class="flag-number">4</div>
-        <div>
-          <h4>Crawlspace with HVAC</h4>
-          <p>Mold, moisture, and contaminants from the crawlspace get distributed throughout the home.</p>
-        </div>
-      </div>
-      <div class="flag-item reveal reveal-delay-1">
-        <div class="flag-number">5</div>
-        <div>
-          <h4>Cover-up remodeling</h4>
-          <p>Cosmetic renovations can hide water damage, mold, and improper material layering.</p>
-        </div>
-      </div>
-      <div class="flag-item reveal reveal-delay-2">
-        <div class="flag-number">6</div>
-        <div>
-          <h4>"Energy efficient" tight construction</h4>
-          <p>Modern airtight homes can trap moisture, VOCs, and combustion gases inside.</p>
-        </div>
-      </div>
-      <div class="flag-item reveal reveal-delay-1">
-        <div class="flag-number">7</div>
-        <div>
-          <h4>Smart home systems</h4>
-          <p>Smart meters, wireless lighting, and IoT devices increase RF radiation throughout the home.</p>
-        </div>
-      </div>
-      <div class="flag-item reveal reveal-delay-2">
-        <div class="flag-number">8</div>
-        <div>
-          <h4>Municipal water supply</h4>
-          <p>PFAS, heavy metals, and disinfection byproducts may be present above health guidelines.</p>
-        </div>
-      </div>
-      <div class="flag-item reveal reveal-delay-1">
-        <div class="flag-number">9</div>
-        <div>
-          <h4>All-LED lighting</h4>
-          <p>High flicker rates and blue light peaks can disrupt sleep, hormones, and circadian rhythm.</p>
-        </div>
-      </div>
-      <div class="flag-item reveal reveal-delay-2">
-        <div class="flag-number">10</div>
-        <div>
-          <h4>Nearby cell towers or power lines</h4>
-          <p>External RF and magnetic field sources that cannot be remediated after purchase.</p>
-        </div>
-      </div>
-    </div>
   </div>
 </section>
 
