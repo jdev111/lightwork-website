@@ -766,6 +766,126 @@ body {
   max-width: 520px;
 }
 
+/* ========== FEATURED ASSESSMENT ========== */
+.featured-assessment {
+  padding: 120px 0;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+}
+.featured-inner {
+  max-width: 860px;
+  margin: 0 auto;
+}
+.featured-label-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+.featured-icon-badge {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(168, 85, 247, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.featured-label-text {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #a855f7;
+}
+.featured-title {
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+  color: var(--teal);
+  line-height: 1.2;
+  margin-bottom: 40px;
+  letter-spacing: -0.01em;
+}
+.featured-body {
+  display: grid;
+  grid-template-columns: 3px 1fr;
+  gap: 32px;
+}
+.featured-line {
+  background: linear-gradient(to bottom, var(--accent), var(--blush));
+  border-radius: 2px;
+}
+.featured-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.featured-content p {
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.75;
+}
+.featured-content p strong {
+  color: var(--teal);
+  font-weight: 500;
+}
+.featured-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  background: rgba(220, 38, 38, 0.04);
+  border: 1px solid rgba(220, 38, 38, 0.1);
+  border-radius: 12px;
+  margin: 4px 0;
+}
+.featured-stat-number {
+  font-family: var(--serif);
+  font-size: 1.8rem;
+  color: var(--danger);
+  line-height: 1;
+}
+.featured-stat-text {
+  font-size: 0.88rem;
+  color: var(--text-dark);
+  line-height: 1.3;
+}
+.featured-advisor {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  background: var(--cream);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  margin-top: 8px;
+}
+.featured-advisor-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--blush), var(--accent));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--serif);
+  font-size: 1rem;
+  color: var(--white);
+  flex-shrink: 0;
+}
+.featured-advisor-info strong {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--teal);
+  margin-bottom: 2px;
+}
+.featured-advisor-info span {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
 /* ========== CASE STUDY ========== */
 .case-study {
   padding: 120px 0;
@@ -1343,6 +1463,46 @@ body {
           <div class="timeline-label">If You Move In</div>
           <h3>Comprehensive Assessment</h3>
           <p>Once you've moved into a home with no major hazards, our comprehensive assessments can help you optimize everything else: water quality, air quality, lighting, household products, and more. The full Lightwork experience.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED ASSESSMENT -->
+<section class="featured-assessment">
+  <div class="container">
+    <div class="featured-inner">
+      <div class="featured-label-row reveal">
+        <div class="featured-icon-badge">
+          <svg width="20" height="20" fill="none" stroke="#a855f7" stroke-width="1.5" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <span class="featured-label-text">Inside a Recent Assessment</span>
+      </div>
+      <h2 class="featured-title reveal">Elevated Magnetic Fields from an Underground Power Line</h2>
+      <div class="featured-body reveal">
+        <div class="featured-line"></div>
+        <div class="featured-content">
+          <p>We recently conducted a pre-purchase home health assessment to screen for potential hazards that could affect the buyer's decision.</p>
+
+          <p>We identified <strong>elevated magnetic fields from a buried power line and a transformer in the front garden</strong>, which were extending halfway into the home. We recorded field strengths of around 3 mG, which is a level numerous studies have linked to a statistically significant increase in childhood leukemia incidence. For adults, there's no clear evidence of risk at these levels, though research is limited.</p>
+
+          <div class="featured-stat">
+            <div class="featured-stat-number">~3 mG</div>
+            <div class="featured-stat-text">Field strength recorded, a level linked to<br>increased childhood leukemia incidence</div>
+          </div>
+
+          <p>We're now working with our technical team to scope out a <strong>shielding system that could offset the elevated fields</strong> so the buyer can understand the feasibility before making a decision on closing.</p>
+
+          <p>Unfortunately, magnetic field exposure from power lines can be very difficult to remediate. Active shielding systems are expensive and only feasible in certain homes.</p>
+
+          <div class="featured-advisor">
+            <div class="featured-advisor-avatar">CK</div>
+            <div class="featured-advisor-info">
+              <strong>Charles Keen, EMF Advisor</strong>
+              <span>At Lightwork, we're fortunate to work with Charles Keen, who is at the forefront of this field and has played a major role in developing the active shielding technologies in use today.</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
