@@ -393,12 +393,12 @@ body {
 .problem-header .section-subtitle { margin: 0 auto; }
 .problem-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 24px;
 }
 .problem-card {
-  padding: 36px 28px;
-  border-radius: 16px;
+  padding: 40px 36px;
+  border-radius: 20px;
   border: 1px solid var(--border);
   background: var(--cream);
   transition: all 0.3s;
@@ -416,7 +416,6 @@ body {
   opacity: 0.6;
 }
 .problem-card:hover {
-  transform: translateY(-3px);
   box-shadow: 0 12px 40px rgba(24, 45, 52, 0.06);
 }
 .problem-card-icon {
@@ -427,20 +426,58 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   font-size: 1.3rem;
 }
 .problem-card h3 {
   font-family: var(--serif);
-  font-size: 1.15rem;
+  font-size: 1.3rem;
   color: var(--teal);
-  margin-bottom: 10px;
+  margin-bottom: 16px;
   line-height: 1.3;
 }
 .problem-card p {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+.problem-card p:last-child { margin-bottom: 0; }
+.problem-card p strong {
+  color: var(--teal);
+  font-weight: 500;
+}
+.problem-detail-list {
+  list-style: none;
+  margin: 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.problem-detail-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
   font-size: 0.88rem;
   color: var(--text-muted);
-  line-height: 1.6;
+  line-height: 1.5;
+}
+.problem-detail-list li svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+.problem-severity {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(220, 38, 38, 0.05);
+  border: 1px solid rgba(220, 38, 38, 0.12);
+  border-radius: 10px;
+  font-size: 0.84rem;
+  color: var(--danger);
+  font-weight: 500;
+  margin-top: 8px;
 }
 
 /* ========== VS SECTION ========== */
@@ -1040,6 +1077,7 @@ body {
     box-shadow: 0 16px 40px rgba(0,0,0,0.08);
   }
   .problem-grid { grid-template-columns: 1fr; }
+  .problem-card { padding: 32px 24px; }
   .vs-layout { grid-template-columns: 1fr; gap: 24px; }
   .vs-divider { display: none; }
   .scope-grid { grid-template-columns: 1fr; }
@@ -1141,24 +1179,65 @@ body {
     <div class="problem-grid">
       <div class="problem-card reveal reveal-delay-1">
         <div class="problem-card-icon">
-          <svg width="22" height="22" fill="none" stroke="#dc2626" stroke-width="1.5" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          <svg width="22" height="22" fill="none" stroke="#dc2626" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         </div>
-        <h3>External power lines and magnetic fields</h3>
-        <p>If your home is impacted by an external power line (like our co-founder's homes were), you'd want to know before you move in. These issues cause health problems and are extremely expensive to address.</p>
+        <h3>Hidden Mold</h3>
+        <p>Mold is one of the most common and most serious issues we find. The problem is that <strong>you often can't see it, smell it, or detect it without specialized testing</strong>. Standard home inspections rely on a visual check. Even dedicated mold inspectors typically use air sampling, which frequently produces false negatives.</p>
+        <p>The health effects of hidden mold exposure are significant:</p>
+        <ul class="problem-detail-list">
+          <li>
+            <svg width="14" height="14" fill="none" stroke="#dc2626" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+            Chronic fatigue, brain fog, and cognitive impairment
+          </li>
+          <li>
+            <svg width="14" height="14" fill="none" stroke="#dc2626" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+            Immune suppression, respiratory issues, and inflammation
+          </li>
+          <li>
+            <svg width="14" height="14" fill="none" stroke="#dc2626" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+            Allergic reactions, asthma, and neurological symptoms
+          </li>
+          <li>
+            <svg width="14" height="14" fill="none" stroke="#dc2626" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+            Mycotoxin exposure linked to long-term chronic illness
+          </li>
+        </ul>
+        <p>Remediation is expensive. Professional mold remediation typically costs <strong>$10,000 to $30,000+</strong> depending on the extent of the problem, and severe cases can require tearing out drywall, flooring, and even structural components. If you discover mold after closing, you own the problem.</p>
+        <div class="problem-severity">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          We regularly find hidden mold in homes that passed previous inspections
+        </div>
       </div>
       <div class="problem-card reveal reveal-delay-2">
         <div class="problem-card-icon">
-          <svg width="22" height="22" fill="none" stroke="#dc2626" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <svg width="22" height="22" fill="none" stroke="#dc2626" stroke-width="1.5" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
         </div>
-        <h3>Hidden mold that passes previous inspections</h3>
-        <p>We regularly uncover hidden mold in homes that have passed previous inspections. Standard air samples frequently produce false negatives. Our DNA-based dust testing catches what others miss.</p>
-      </div>
-      <div class="problem-card reveal reveal-delay-3">
-        <div class="problem-card-icon">
-          <svg width="22" height="22" fill="none" stroke="#dc2626" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.49 8.49l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.49-8.49l2.83-2.83"/></svg>
+        <h3>External Magnetic Fields</h3>
+        <p>If your home is near a power line, underground cable, or transformer, you could be living with <strong>elevated magnetic fields that are extremely difficult or impossible to fix</strong>. Our co-founder's homes were affected by this exact issue.</p>
+        <p>Unlike most environmental problems, external magnetic field sources cannot be removed. The power line belongs to the utility company. The field it produces extends into your home 24 hours a day, every day.</p>
+        <ul class="problem-detail-list">
+          <li>
+            <svg width="14" height="14" fill="none" stroke="#dc2626" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+            Numerous studies link fields above 3 mG to increased childhood leukemia incidence
+          </li>
+          <li>
+            <svg width="14" height="14" fill="none" stroke="#dc2626" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+            Active shielding systems are the only real option, and they're expensive
+          </li>
+          <li>
+            <svg width="14" height="14" fill="none" stroke="#dc2626" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+            Shielding is only feasible in certain homes, not a guaranteed fix
+          </li>
+          <li>
+            <svg width="14" height="14" fill="none" stroke="#dc2626" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+            You cannot move the source, negotiate with the utility, or renovate your way out
+          </li>
+        </ul>
+        <p>This is the kind of issue where <strong>knowing before you commit changes everything</strong>. You can negotiate, factor in the cost of shielding, or walk away. After closing, your options shrink dramatically.</p>
+        <div class="problem-severity">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          1 in 3 homes we've tested has had a serious external magnetic EMF issue
         </div>
-        <h3>Expensive to fix after you've moved in</h3>
-        <p>These issues often require major remediation work. Knowing before you commit gives you the information to negotiate, plan for remediation, or walk away entirely.</p>
       </div>
     </div>
   </div>
