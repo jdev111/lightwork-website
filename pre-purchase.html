@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pre-Purchase Home Health Assessment | Lightwork</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --teal: #182d34;
+  --teal-deep: #0f1f24;
+  --cream: #f8f7f6;
+  --blush: #f0e2dd;
+  --accent: #67b7be;
+  --accent-hover: #5aa8af;
+  --white: #ffffff;
+  --text-dark: #182d34;
+  --text-muted: #4a6670;
+  --text-light: #8fa8b2;
+  --border: #d8d4d0;
+  --warning: #d97706;
+  --danger: #dc2626;
+  --serif: 'Instrument Serif', Georgia, serif;
+  --sans: 'DM Sans', system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  color: var(--text-dark);
+  background: var(--cream);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ========== ANIMATIONS ========== */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* ========== NAV ========== */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 0 24px;
+  transition: all 0.4s ease;
+}
+.nav::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(248, 247, 246, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.4s;
+}
+.nav.scrolled::before { border-bottom-color: var(--border); }
+.nav-inner {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+}
+.nav-logo {
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  color: var(--teal);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--teal); }
+.nav-cta {
+  padding: 10px 22px;
+  background: var(--teal);
+  color: var(--white) !important;
+  border-radius: 100px;
+  font-weight: 500;
+  font-size: 0.88rem;
+  transition: background 0.2s, transform 0.2s;
+}
+.nav-cta:hover { background: var(--accent); transform: translateY(-1px); }
+.nav-mobile-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.nav-mobile-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--teal);
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+.nav-mobile-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(2.5px, 2.5px); }
+.nav-mobile-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-mobile-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(2.5px, -2.5px); }
+
+/* ========== SHARED ========== */
+.section-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  color: var(--teal);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+.section-subtitle {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  max-width: 560px;
+  line-height: 1.6;
+  margin-bottom: 56px;
+}
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  background: var(--accent);
+  color: var(--white);
+  border: none;
+  border-radius: 100px;
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.25s;
+}
+.btn-primary:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(103, 183, 190, 0.3);
+}
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 100px;
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  font-weight: 400;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.25s;
+}
+.btn-outline:hover {
+  border-color: rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.05);
+}
+.btn-outline-dark {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--teal);
+  border-radius: 100px;
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  font-weight: 400;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.25s;
+}
+.btn-outline-dark:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ========== HERO ========== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background: var(--teal);
+  overflow: hidden;
+}
+.hero-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 256px;
+  pointer-events: none;
+}
+.hero-gradient {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at 75% 60%, rgba(217, 119, 6, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 60% at 20% 80%, rgba(103, 183, 190, 0.1) 0%, transparent 60%);
+  pointer-events: none;
+}
+.hero-content {
+  position: relative;
+  padding-top: 120px;
+  padding-bottom: 80px;
+}
+.hero-layout {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 80px;
+  align-items: center;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  background: rgba(217, 119, 6, 0.12);
+  border: 1px solid rgba(217, 119, 6, 0.25);
+  border-radius: 100px;
+  color: var(--warning);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.2s forwards;
+}
+.hero-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--warning);
+  animation: pulse-dot 2s infinite;
+}
+.hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(2.6rem, 5vw, 3.8rem);
+  line-height: 1.1;
+  color: var(--white);
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.35s forwards;
+}
+.hero h1 em { font-style: italic; color: var(--accent); }
+.hero-sub {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--text-light);
+  max-width: 520px;
+  margin-bottom: 40px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.5s forwards;
+}
+.hero-buttons {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.65s forwards;
+}
+.hero-buttons .btn-outline { color: var(--white); }
+
+/* Hero side card */
+.hero-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 36px;
+  backdrop-filter: blur(12px);
+  opacity: 0;
+  animation: fadeUp 0.8s 0.7s forwards;
+}
+.hero-card-title {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  color: var(--white);
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.hero-card-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.hero-card-item:last-child { margin-bottom: 0; }
+.hero-card-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1rem;
+}
+.hero-card-icon.warning { background: rgba(217, 119, 6, 0.15); }
+.hero-card-icon.danger { background: rgba(220, 38, 38, 0.15); }
+.hero-card-icon.info { background: rgba(103, 183, 190, 0.15); }
+.hero-card-item strong {
+  display: block;
+  font-size: 0.88rem;
+  color: var(--white);
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+.hero-card-item span {
+  font-size: 0.8rem;
+  color: var(--text-light);
+  line-height: 1.4;
+}
+
+/* ========== PROBLEM SECTION ========== */
+.problem {
+  padding: 100px 0;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+}
+.problem-header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+.problem-header .section-subtitle { margin: 0 auto; }
+.problem-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.problem-card {
+  padding: 36px 28px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--cream);
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.problem-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--danger);
+  opacity: 0.6;
+}
+.problem-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(24, 45, 52, 0.06);
+}
+.problem-card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(220, 38, 38, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+}
+.problem-card h3 {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  color: var(--teal);
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+.problem-card p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ========== VS SECTION ========== */
+.vs-section {
+  padding: 120px 0;
+  background: var(--cream);
+}
+.vs-header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+.vs-header .section-subtitle { margin: 0 auto; }
+.vs-layout {
+  display: grid;
+  grid-template-columns: 1fr 60px 1fr;
+  gap: 0;
+  align-items: stretch;
+  max-width: 960px;
+  margin: 0 auto;
+}
+.vs-card {
+  padding: 40px 32px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+}
+.vs-card.standard {
+  background: var(--white);
+  opacity: 0.7;
+}
+.vs-card.lightwork {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: var(--white);
+  box-shadow: 0 24px 64px rgba(24, 45, 52, 0.2);
+  position: relative;
+  z-index: 1;
+}
+.vs-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 14px;
+  border-radius: 100px;
+  margin-bottom: 20px;
+}
+.vs-card.standard .vs-badge {
+  background: rgba(24, 45, 52, 0.06);
+  color: var(--text-muted);
+}
+.vs-card.lightwork .vs-badge {
+  background: rgba(103, 183, 190, 0.2);
+  color: var(--accent);
+}
+.vs-card h3 {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  margin-bottom: 24px;
+}
+.vs-card.standard h3 { color: var(--text-muted); }
+.vs-card.lightwork h3 { color: var(--white); }
+.vs-list {
+  list-style: none;
+}
+.vs-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+.vs-card.standard .vs-list li {
+  border-bottom-color: var(--border);
+  color: var(--text-muted);
+}
+.vs-card.lightwork .vs-list li { color: rgba(255,255,255,0.8); }
+.vs-list li:last-child { border-bottom: none; }
+.vs-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+.vs-icon.check { background: rgba(103, 183, 190, 0.2); color: var(--accent); }
+.vs-icon.cross { background: rgba(220, 38, 38, 0.08); color: var(--danger); }
+.vs-icon.dash { background: rgba(24, 45, 52, 0.06); color: var(--text-light); }
+.vs-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.vs-divider-text {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--blush);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--serif);
+  font-size: 0.88rem;
+  font-style: italic;
+  color: var(--teal);
+  z-index: 2;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+}
+
+/* ========== WHAT WE TEST ========== */
+.test-scope {
+  padding: 120px 0;
+  background: var(--white);
+}
+.test-scope-header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+.test-scope-header .section-subtitle { margin: 0 auto; }
+.scope-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.scope-card {
+  display: flex;
+  gap: 20px;
+  padding: 28px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--cream);
+  transition: all 0.3s;
+}
+.scope-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(24, 45, 52, 0.05);
+}
+.scope-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1.2rem;
+}
+.scope-icon.emf { background: rgba(168, 85, 247, 0.1); }
+.scope-icon.mold { background: rgba(239, 68, 68, 0.1); }
+.scope-icon.light { background: rgba(245, 158, 11, 0.1); }
+.scope-icon.water { background: rgba(59, 130, 246, 0.1); }
+.scope-icon.air { background: rgba(34, 197, 94, 0.1); }
+.scope-icon.goods { background: rgba(103, 183, 190, 0.1); }
+.scope-card h4 {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  color: var(--teal);
+  margin-bottom: 6px;
+}
+.scope-card p {
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+.scope-note {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ========== RED FLAGS ========== */
+.red-flags {
+  padding: 120px 0;
+  background: var(--teal);
+  position: relative;
+  overflow: hidden;
+}
+.red-flags::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 256px;
+  pointer-events: none;
+}
+.red-flags-header {
+  text-align: center;
+  margin-bottom: 64px;
+  position: relative;
+}
+.red-flags-header .section-title { color: var(--white); }
+.red-flags-header .section-subtitle { margin: 0 auto; color: var(--text-light); }
+.flags-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+}
+.flag-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 24px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  transition: all 0.3s;
+}
+.flag-item:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(103, 183, 190, 0.2);
+}
+.flag-number {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: rgba(217, 119, 6, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--warning);
+}
+.flag-item h4 {
+  font-size: 0.92rem;
+  color: var(--white);
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+.flag-item p {
+  font-size: 0.82rem;
+  color: var(--text-light);
+  line-height: 1.5;
+}
+
+/* ========== PROCESS ========== */
+.process {
+  padding: 120px 0;
+  background: var(--cream);
+}
+.process-header {
+  text-align: center;
+  margin-bottom: 72px;
+}
+.process-header .section-subtitle { margin: 0 auto; }
+.timeline {
+  max-width: 720px;
+  margin: 0 auto;
+  position: relative;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 24px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--accent), var(--blush));
+}
+.timeline-item {
+  display: flex;
+  gap: 32px;
+  margin-bottom: 48px;
+  position: relative;
+}
+.timeline-item:last-child { margin-bottom: 0; }
+.timeline-dot {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 2px solid var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  z-index: 1;
+}
+.timeline-dot span {
+  font-family: var(--serif);
+  font-size: 1rem;
+  color: var(--accent);
+  font-weight: 600;
+}
+.timeline-content {
+  padding-top: 8px;
+}
+.timeline-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.timeline-content h3 {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  color: var(--teal);
+  margin-bottom: 10px;
+}
+.timeline-content p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  max-width: 520px;
+}
+
+/* ========== CASE STUDY ========== */
+.case-study {
+  padding: 120px 0;
+  background: var(--blush);
+}
+.case-study-header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+.case-study-header .section-subtitle { margin: 0 auto; }
+.case-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.case-card {
+  background: var(--white);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+.case-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(24, 45, 52, 0.08);
+}
+.case-card-top {
+  padding: 28px 28px 0;
+}
+.case-tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 100px;
+  margin-bottom: 16px;
+}
+.case-tag.caught { background: rgba(34, 197, 94, 0.1); color: #16a34a; }
+.case-tag.missed { background: rgba(220, 38, 38, 0.1); color: #dc2626; }
+.case-card h4 {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  color: var(--teal);
+  line-height: 1.35;
+  margin-bottom: 10px;
+}
+.case-card p {
+  font-size: 0.86rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+.case-card-bottom {
+  padding: 16px 28px 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.case-outcome {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+/* ========== QUOTE ========== */
+.quote-section {
+  padding: 100px 0;
+  background: var(--white);
+}
+.quote-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+}
+.quote-mark {
+  font-family: var(--serif);
+  font-size: 7rem;
+  color: var(--accent);
+  opacity: 0.2;
+  line-height: 0.5;
+  margin-bottom: 12px;
+}
+.quote-inner blockquote {
+  font-family: var(--serif);
+  font-size: clamp(1.3rem, 2.2vw, 1.7rem);
+  color: var(--teal);
+  line-height: 1.5;
+  font-style: italic;
+  margin-bottom: 28px;
+}
+.quote-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--teal);
+  margin-bottom: 4px;
+}
+.quote-title {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* ========== CTA ========== */
+.cta-section {
+  padding: 120px 0;
+  background: var(--teal);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 80% at 30% 100%, rgba(103, 183, 190, 0.1) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 70% 0%, rgba(217, 119, 6, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+.cta-section .container { position: relative; }
+.cta-section h2 {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--white);
+  line-height: 1.15;
+  max-width: 640px;
+  margin: 0 auto 16px;
+  letter-spacing: -0.02em;
+}
+.cta-section h2 em { font-style: italic; color: var(--accent); }
+.cta-section p {
+  font-size: 1.05rem;
+  color: var(--text-light);
+  max-width: 480px;
+  margin: 0 auto 40px;
+  line-height: 1.6;
+}
+.cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.cta-buttons .btn-outline { color: var(--white); }
+
+/* ========== FOOTER ========== */
+.footer {
+  background: var(--teal-deep);
+  padding: 60px 0 32px;
+  color: rgba(255,255,255,0.6);
+}
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+.footer .nav-logo { color: var(--white); display: inline-block; }
+.footer-links {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+  flex-wrap: wrap;
+}
+.footer-links a {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--accent); }
+.footer-copy {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.3);
+}
+.footer-bottom {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-socials {
+  display: flex;
+  gap: 12px;
+}
+.footer-socials a {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.4);
+  text-decoration: none;
+  transition: all 0.2s;
+  font-size: 0.8rem;
+}
+.footer-socials a:hover { background: var(--accent); color: var(--white); }
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 1024px) {
+  .hero-layout { grid-template-columns: 1fr; gap: 40px; }
+  .hero-card { max-width: 420px; }
+}
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-mobile-toggle { display: flex; }
+  .nav-links.open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 72px;
+    left: -24px;
+    right: -24px;
+    background: var(--cream);
+    padding: 24px;
+    gap: 16px;
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.08);
+  }
+  .problem-grid { grid-template-columns: 1fr; }
+  .vs-layout { grid-template-columns: 1fr; gap: 24px; }
+  .vs-divider { display: none; }
+  .scope-grid { grid-template-columns: 1fr; }
+  .flags-grid { grid-template-columns: 1fr; }
+  .case-grid { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 2.2rem; }
+  .section-title { font-size: 1.8rem; }
+}
+@media (max-width: 480px) {
+  .hero-buttons { flex-direction: column; }
+  .hero-buttons .btn-primary, .hero-buttons .btn-outline { width: 100%; justify-content: center; }
+  .cta-buttons { flex-direction: column; align-items: center; }
+  .footer-inner { flex-direction: column; text-align: center; }
+  .footer-bottom { flex-direction: column; gap: 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Lightwork</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="#scope">What We Test</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#cases">Results</a></li>
+      <li><a href="#cta" class="nav-cta">Schedule a Call</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grain"></div>
+  <div class="hero-gradient"></div>
+  <div class="container hero-content">
+    <div class="hero-layout">
+      <div>
+        <div class="hero-badge">
+          <span class="hero-badge-dot"></span>
+          Pre-Purchase Assessment
+        </div>
+        <h1>Know what you're buying.<br><em>Before you sign.</em></h1>
+        <p class="hero-sub">A standard home inspection checks structure and systems. It won't tell you about the hidden toxins, EMFs, or mold that could be affecting your family's health from day one.</p>
+        <div class="hero-buttons">
+          <a href="#cta" class="btn-primary">
+            Schedule a Call
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#problem" class="btn-outline">Why It Matters</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-title">What a standard inspection misses</div>
+        <div class="hero-card-item">
+          <div class="hero-card-icon warning">
+            <svg width="18" height="18" fill="none" stroke="#d97706" stroke-width="1.5" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <div>
+            <strong>Electromagnetic fields</strong>
+            <span>Wiring errors, high magnetic fields, and RF exposure in bedrooms</span>
+          </div>
+        </div>
+        <div class="hero-card-item">
+          <div class="hero-card-icon danger">
+            <svg width="18" height="18" fill="none" stroke="#dc2626" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <strong>Hidden mold species</strong>
+            <span>DNA-level testing catches what air samples and visual inspection miss</span>
+          </div>
+        </div>
+        <div class="hero-card-item">
+          <div class="hero-card-icon info">
+            <svg width="18" height="18" fill="none" stroke="#67b7be" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/></svg>
+          </div>
+          <div>
+            <strong>Water contamination</strong>
+            <span>Heavy metals, PFAS, and 100+ contaminants in your drinking water</span>
+          </div>
+        </div>
+        <div class="hero-card-item">
+          <div class="hero-card-icon warning">
+            <svg width="18" height="18" fill="none" stroke="#d97706" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.73 12.73l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          </div>
+          <div>
+            <strong>Circadian-disrupting lighting</strong>
+            <span>Blue light peaks, high flicker, and poor color rendering</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem" id="problem">
+  <div class="container">
+    <div class="problem-header">
+      <div class="section-label reveal">The Blind Spot</div>
+      <h2 class="section-title reveal">Your home inspection checked the roof.<br>It didn't check the <em style="font-family:var(--serif);font-style:italic;color:var(--accent);">health.</em></h2>
+      <p class="section-subtitle reveal">Standard inspections focus on structure, plumbing, and electrical code. They miss the environmental factors that directly impact how you feel every day.</p>
+    </div>
+    <div class="problem-grid">
+      <div class="problem-card reveal reveal-delay-1">
+        <div class="problem-card-icon">
+          <svg width="22" height="22" fill="none" stroke="#dc2626" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9.59 4.59A2 2 0 1111 8H2m10.59 11.41A2 2 0 1014 16H2m15.73-8.27A2.5 2.5 0 1119.5 12H2"/></svg>
+        </div>
+        <h3>Indoor air can be 2-5x more polluted than outdoor air</h3>
+        <p>Gas leaks, combustion byproducts, and particulate matter from carpets and appliances go completely undetected by standard inspections.</p>
+      </div>
+      <div class="problem-card reveal reveal-delay-2">
+        <div class="problem-card-icon">
+          <svg width="22" height="22" fill="none" stroke="#dc2626" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>Air samples give false negatives on mold</h3>
+        <p>Most mold inspections rely on air sampling, which frequently misses hidden species. We use DNA-based dust testing for accurate results.</p>
+      </div>
+      <div class="problem-card reveal reveal-delay-3">
+        <div class="problem-card-icon">
+          <svg width="22" height="22" fill="none" stroke="#dc2626" stroke-width="1.5" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <h3>Wiring errors create health risks invisible to code</h3>
+        <p>Older wiring, knob-and-tube systems, and net current issues can create elevated magnetic fields throughout the home, especially in bedrooms.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VS SECTION -->
+<section class="vs-section" id="vs">
+  <div class="container">
+    <div class="vs-header">
+      <div class="section-label reveal">Side by Side</div>
+      <h2 class="section-title reveal">Two inspections. One choice.</h2>
+      <p class="section-subtitle reveal">See what's covered when you add Lightwork to your home purchase process.</p>
+    </div>
+    <div class="vs-layout reveal">
+      <div class="vs-card standard">
+        <span class="vs-badge">Standard Inspection</span>
+        <h3>Structure &amp; Systems</h3>
+        <ul class="vs-list">
+          <li><span class="vs-icon check">&#10003;</span>Roof, foundation, structure</li>
+          <li><span class="vs-icon check">&#10003;</span>Plumbing and electrical systems</li>
+          <li><span class="vs-icon check">&#10003;</span>HVAC functionality</li>
+          <li><span class="vs-icon dash">&ndash;</span>Basic visual mold check only</li>
+          <li><span class="vs-icon cross">&#10005;</span>No water quality lab testing</li>
+          <li><span class="vs-icon cross">&#10005;</span>No EMF measurement</li>
+          <li><span class="vs-icon cross">&#10005;</span>No air quality testing</li>
+          <li><span class="vs-icon cross">&#10005;</span>No light spectrum analysis</li>
+          <li><span class="vs-icon cross">&#10005;</span>No remediation guidance</li>
+        </ul>
+      </div>
+      <div class="vs-divider">
+        <div class="vs-divider-text">vs</div>
+      </div>
+      <div class="vs-card lightwork">
+        <span class="vs-badge">Lightwork Assessment</span>
+        <h3>Health &amp; Environment</h3>
+        <ul class="vs-list">
+          <li><span class="vs-icon check">&#10003;</span>EMFs, magnetic fields, wiring errors</li>
+          <li><span class="vs-icon check">&#10003;</span>DNA-based mold testing (MSQPCR)</li>
+          <li><span class="vs-icon check">&#10003;</span>Light spectrum, flicker, circadian impact</li>
+          <li><span class="vs-icon check">&#10003;</span>Water lab testing (100+ contaminants)</li>
+          <li><span class="vs-icon check">&#10003;</span>Air quality across 6 particle sizes</li>
+          <li><span class="vs-icon check">&#10003;</span>Combustion gas and CO detection</li>
+          <li><span class="vs-icon check">&#10003;</span>Household product audit</li>
+          <li><span class="vs-icon check">&#10003;</span>Proprietary Exposure Index scoring</li>
+          <li><span class="vs-icon check">&#10003;</span>Prioritized remediation plan</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT WE TEST -->
+<section class="test-scope" id="scope">
+  <div class="container">
+    <div class="test-scope-header">
+      <div class="section-label reveal">Pre-Purchase Scope</div>
+      <h2 class="section-title reveal">What We Test Before You Buy</h2>
+      <p class="section-subtitle reveal">Every parameter that matters for your family's health, measured with professional-grade instruments and certified lab analysis.</p>
+    </div>
+    <div class="scope-grid">
+      <div class="scope-card reveal reveal-delay-1">
+        <div class="scope-icon emf">
+          <svg width="20" height="20" fill="none" stroke="#a855f7" stroke-width="1.5" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <div>
+          <h4>Electromagnetic Fields</h4>
+          <p>AC magnetic fields, electric fields, radiofrequency, dirty electricity, wiring errors, and device emissions.</p>
+        </div>
+      </div>
+      <div class="scope-card reveal reveal-delay-2">
+        <div class="scope-icon mold">
+          <svg width="20" height="20" fill="none" stroke="#ef4444" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div>
+          <h4>Mold Likelihood</h4>
+          <p>Multiple MSQPCR dust samples benchmarked against outdoor baselines to distinguish true indoor sources.</p>
+        </div>
+      </div>
+      <div class="scope-card reveal reveal-delay-3">
+        <div class="scope-icon light">
+          <svg width="20" height="20" fill="none" stroke="#f59e0b" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.73 12.73l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        </div>
+        <div>
+          <h4>Light Quality</h4>
+          <p>Spectral distribution, melanopic daylight efficacy, flicker percentage, color temperature, CRI, and positioning.</p>
+        </div>
+      </div>
+      <div class="scope-card reveal reveal-delay-4">
+        <div class="scope-icon water">
+          <svg width="20" height="20" fill="none" stroke="#3b82f6" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/></svg>
+        </div>
+        <div>
+          <h4>Water Quality</h4>
+          <p>Lab analysis for 100+ contaminants including PFAS, heavy metals, THMs, VOCs, and disinfection byproducts.</p>
+        </div>
+      </div>
+      <div class="scope-card reveal reveal-delay-1">
+        <div class="scope-icon air">
+          <svg width="20" height="20" fill="none" stroke="#22c55e" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9.59 4.59A2 2 0 1111 8H2m10.59 11.41A2 2 0 1014 16H2m15.73-8.27A2.5 2.5 0 1119.5 12H2"/></svg>
+        </div>
+        <div>
+          <h4>Air Quality</h4>
+          <p>Particulate matter (6 sizes), CO2, combustion gas leaks, carbon monoxide, and ventilation assessment.</p>
+        </div>
+      </div>
+      <div class="scope-card reveal reveal-delay-2">
+        <div class="scope-icon goods">
+          <svg width="20" height="20" fill="none" stroke="#67b7be" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+        </div>
+        <div>
+          <h4>Household Goods</h4>
+          <p>Audit of cleaning supplies, personal care products, and cookware for harmful compounds and ingredients.</p>
+        </div>
+      </div>
+    </div>
+    <p class="scope-note reveal">Scope is tailored to each home. We can adjust parameters based on your specific concerns and the property type.</p>
+  </div>
+</section>
+
+<!-- RED FLAGS -->
+<section class="red-flags">
+  <div class="container">
+    <div class="red-flags-header">
+      <div class="section-label reveal" style="color:var(--warning);">Before You Commit</div>
+      <h2 class="section-title reveal">10 red flags that signal a sick home</h2>
+      <p class="section-subtitle reveal">These are issues a standard home inspection won't catch. A Lightwork pre-purchase assessment will.</p>
+    </div>
+    <div class="flags-grid">
+      <div class="flag-item reveal reveal-delay-1">
+        <div class="flag-number">1</div>
+        <div>
+          <h4>Overcomplicated rooflines</h4>
+          <p>Complex roof shapes trap moisture and create leak-prone junctures that breed hidden mold.</p>
+        </div>
+      </div>
+      <div class="flag-item reveal reveal-delay-2">
+        <div class="flag-number">2</div>
+        <div>
+          <h4>Attached garage</h4>
+          <p>Car exhaust, stored chemicals, and combustion gases migrate into living spaces through shared walls.</p>
+        </div>
+      </div>
+      <div class="flag-item reveal reveal-delay-1">
+        <div class="flag-number">3</div>
+        <div>
+          <h4>Older wiring (knob and tube)</h4>
+          <p>Produces elevated electromagnetic fields and can create body voltage in sleeping areas.</p>
+        </div>
+      </div>
+      <div class="flag-item reveal reveal-delay-2">
+        <div class="flag-number">4</div>
+        <div>
+          <h4>Crawlspace with HVAC</h4>
+          <p>Mold, moisture, and contaminants from the crawlspace get distributed throughout the home.</p>
+        </div>
+      </div>
+      <div class="flag-item reveal reveal-delay-1">
+        <div class="flag-number">5</div>
+        <div>
+          <h4>Cover-up remodeling</h4>
+          <p>Cosmetic renovations can hide water damage, mold, and improper material layering.</p>
+        </div>
+      </div>
+      <div class="flag-item reveal reveal-delay-2">
+        <div class="flag-number">6</div>
+        <div>
+          <h4>"Energy efficient" tight construction</h4>
+          <p>Modern airtight homes can trap moisture, VOCs, and combustion gases inside.</p>
+        </div>
+      </div>
+      <div class="flag-item reveal reveal-delay-1">
+        <div class="flag-number">7</div>
+        <div>
+          <h4>Smart home systems</h4>
+          <p>Smart meters, wireless lighting, and IoT devices increase RF radiation throughout the home.</p>
+        </div>
+      </div>
+      <div class="flag-item reveal reveal-delay-2">
+        <div class="flag-number">8</div>
+        <div>
+          <h4>Municipal water supply</h4>
+          <p>PFAS, heavy metals, and disinfection byproducts may be present above health guidelines.</p>
+        </div>
+      </div>
+      <div class="flag-item reveal reveal-delay-1">
+        <div class="flag-number">9</div>
+        <div>
+          <h4>All-LED lighting</h4>
+          <p>High flicker rates and blue light peaks can disrupt sleep, hormones, and circadian rhythm.</p>
+        </div>
+      </div>
+      <div class="flag-item reveal reveal-delay-2">
+        <div class="flag-number">10</div>
+        <div>
+          <h4>Nearby cell towers or power lines</h4>
+          <p>External RF and magnetic field sources that cannot be remediated after purchase.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="container">
+    <div class="process-header">
+      <div class="section-label reveal">The Process</div>
+      <h2 class="section-title reveal">How a Pre-Purchase Assessment Works</h2>
+      <p class="section-subtitle reveal">We work within your closing timeline. Most assessments can be scheduled within days of your request.</p>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"><span>1</span></div>
+        <div class="timeline-content">
+          <div class="timeline-label">Before Closing</div>
+          <h3>On-Site Assessment</h3>
+          <p>4-6 hours of comprehensive testing using professional-grade instruments. We measure EMFs, collect mold dust samples, test air quality, assess all light sources, and take water samples for lab analysis. Every measurement is spatially mapped to specific rooms.</p>
+        </div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"><span>2</span></div>
+        <div class="timeline-content">
+          <div class="timeline-label">7-10 Days</div>
+          <h3>Detailed Report &amp; Consultation</h3>
+          <p>You receive a 40-60 page report with every finding categorized by our Exposure Index. We walk you through the results on a call, explaining what's severe, what's minor, and what remediation would cost. This gives you real data for your purchase decision.</p>
+        </div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"><span>3</span></div>
+        <div class="timeline-content">
+          <div class="timeline-label">If You Purchase</div>
+          <h3>Remediation Roadmap</h3>
+          <p>If you move forward with the purchase, we provide a prioritized remediation plan. We connect you with vetted contractors, recommend products, and support you through every fix. Some clients also add renovation consulting for a complete healthy home buildout.</p>
+        </div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"><span>4</span></div>
+        <div class="timeline-content">
+          <div class="timeline-label">Optional</div>
+          <h3>Post-Renovation Verification</h3>
+          <p>After renovations or remediation, we return for a follow-up assessment to verify all issues are resolved. This confirms your new home meets the standards you set before moving your family in.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDIES -->
+<section class="case-study" id="cases">
+  <div class="container">
+    <div class="case-study-header">
+      <div class="section-label reveal">What We've Found</div>
+      <h2 class="section-title reveal">Real discoveries in real homes</h2>
+      <p class="section-subtitle reveal">These are issues found during pre-purchase and standard assessments. Every one was invisible to standard inspection.</p>
+    </div>
+    <div class="case-grid">
+      <div class="case-card reveal reveal-delay-1">
+        <div class="case-card-top">
+          <span class="case-tag caught">Caught by Lightwork</span>
+          <h4>Plumbing current creating 3.0 mG magnetic field in a child's nursery</h4>
+          <p>Current flowing through water pipes created elevated magnetic fields at levels associated with increased childhood leukemia risk. Identified, traced to source, and resolved before move-in.</p>
+        </div>
+        <div class="case-card-bottom">
+          <svg width="14" height="14" fill="none" stroke="var(--accent)" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+          <span class="case-outcome">Remediated before family moved in</span>
+        </div>
+      </div>
+      <div class="case-card reveal reveal-delay-2">
+        <div class="case-card-top">
+          <span class="case-tag caught">Caught by Lightwork</span>
+          <h4>Hidden mycotoxin-producing mold species after three "all clear" air tests</h4>
+          <p>Previous inspectors relied on air samples and found nothing. Our DNA-based dust testing revealed severe hidden species requiring professional remediation.</p>
+        </div>
+        <div class="case-card-bottom">
+          <svg width="14" height="14" fill="none" stroke="var(--accent)" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+          <span class="case-outcome">Negotiated repair credit before closing</span>
+        </div>
+      </div>
+      <div class="case-card reveal reveal-delay-3">
+        <div class="case-card-top">
+          <span class="case-tag missed">Missed by Standard Inspection</span>
+          <h4>$8,000 water filtration system letting arsenic and uranium through</h4>
+          <p>The filtration system appeared to be working. It passed visual inspection. Lab analysis revealed dangerous contaminants passing through undetected in drinking water.</p>
+        </div>
+        <div class="case-card-bottom">
+          <svg width="14" height="14" fill="none" stroke="var(--accent)" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+          <span class="case-outcome">System replaced; water verified clean</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section class="quote-section">
+  <div class="container">
+    <div class="quote-inner reveal">
+      <div class="quote-mark">"</div>
+      <blockquote>"Lightwork's home health assessment was next level. They went deep into our lighting, air, water, EMFs, and more. We sleep easier knowing our home's health and having fixed the key issues."</blockquote>
+      <div class="quote-name">Daymond John</div>
+      <div class="quote-title">Entrepreneur &amp; Shark Tank Investor</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <div class="container">
+    <div class="section-label reveal" style="color:var(--warning);">Before You Close</div>
+    <h2 class="reveal">Don't inherit someone else's<br><em>health hazards.</em></h2>
+    <p class="reveal">Get a complete picture of your future home's environmental health before you commit. We work within your closing timeline.</p>
+    <div class="cta-buttons reveal">
+      <a href="#" class="btn-primary">
+        Schedule a Call
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="index.html" class="btn-outline">View Full Assessment</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <a href="index.html" class="nav-logo">Lightwork</a>
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#testing">What We Test</a></li>
+        <li><a href="index.html#testimonials">Reviews</a></li>
+        <li><a href="index.html#team">About</a></li>
+        <li><a href="mailto:hello@lightworkhome.com">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; 2026 Lightwork Home Health. All rights reserved.</span>
+      <div class="footer-socials">
+        <a href="https://www.instagram.com/lightworkhome/" aria-label="Instagram">
+          <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        </a>
+        <a href="https://x.com/lightworkhome" aria-label="X">
+          <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/company/lightworkhomehealth" aria-label="LinkedIn">
+          <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Nav scroll
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 20); });
+
+// Mobile menu
+const toggle = document.getElementById('mobileToggle');
+const links = document.getElementById('navLinks');
+toggle.addEventListener('click', () => { toggle.classList.toggle('open'); links.classList.toggle('open'); });
+links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { toggle.classList.remove('open'); links.classList.remove('open'); }));
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
